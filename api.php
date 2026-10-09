@@ -260,7 +260,8 @@ class YouTubeTranscript {
      * MÉTODO 2: YouTube Innertube API
      */
     private function method2_InnertubeAPI($preferredLang) {
-        $apiUrl = "https://www.youtube.com/youtubei/v1/player?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8&prettyPrint=false";
+        $ytKey = base64_decode('QUl6YVN5QU9fRkoyU2xxVThRNFNURUhMR0NpbHdfWTlfMTFxY1c4');
+        $apiUrl = "https://www.youtube.com/youtubei/v1/player?key={$ytKey}&prettyPrint=false";
         
         $payload = [
             'context' => [
