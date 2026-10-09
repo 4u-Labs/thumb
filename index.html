@@ -120,19 +120,27 @@
 
         .search-group {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             position: relative;
+            align-items: stretch;
+        }
+        .search-input-wrapper {
+            flex: 1;
+            position: relative;
+            display: flex;
+            align-items: center;
         }
         .search-input {
-            flex: 1;
+            width: 100%;
             background: var(--bg-input);
             border: 1px solid var(--border-color);
             color: var(--text-primary);
-            padding: 16px 20px 16px 48px;
+            padding: 16px 115px 16px 48px;
             border-radius: 14px;
             font-size: 1rem;
             outline: none;
             transition: all 0.2s;
+            box-sizing: border-box;
         }
         .search-input:focus {
             border-color: #ef4444;
@@ -145,26 +153,37 @@
             transform: translateY(-50%);
             color: var(--text-secondary);
             font-size: 1.1rem;
+            pointer-events: none;
+            z-index: 2;
         }
         .btn-paste {
             position: absolute;
-            right: 155px;
+            right: 8px;
             top: 50%;
             transform: translateY(-50%);
-            background: transparent;
-            border: none;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             color: var(--text-secondary);
-            padding: 8px 12px;
-            border-radius: 8px;
+            padding: 8px 14px;
+            border-radius: 10px;
             cursor: pointer;
             font-size: 0.85rem;
+            font-weight: 600;
             display: flex;
             align-items: center;
             gap: 6px;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(8px);
+            z-index: 2;
+            white-space: nowrap;
         }
         .btn-paste:hover {
-            color: var(--text-primary);
-            background: rgba(255,255,255,0.08);
+            color: #fff;
+            background: rgba(239, 68, 68, 0.18);
+            border-color: rgba(239, 68, 68, 0.4);
+        }
+        .btn-paste:active {
+            transform: translateY(-50%) scale(0.96);
         }
         .btn-submit {
             background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
@@ -175,16 +194,18 @@
             border-radius: 14px;
             cursor: pointer;
             font-size: 1rem;
-            display: flex;
+            display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 10px;
             transition: all 0.2s;
-            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.35);
             white-space: nowrap;
+            flex-shrink: 0;
         }
         .btn-submit:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.5);
         }
         .btn-submit:disabled {
             opacity: 0.6;
@@ -633,6 +654,18 @@
             font-size: 0.85rem;
             margin-top: 40px;
         }
+
+        /* Responsive */
+        @media (max-width: 680px) {
+            .search-group {
+                flex-direction: column;
+                gap: 12px;
+            }
+            .btn-submit {
+                width: 100%;
+                padding: 16px 20px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -667,18 +700,20 @@
             </p>
 
             <form id="searchForm" class="search-group" onsubmit="event.preventDefault(); processQuery();">
-                <i class="fas fa-link search-icon"></i>
-                <input 
-                    type="text" 
-                    id="urlInput" 
-                    class="search-input" 
-                    placeholder="Cole qualquer link de vídeo (ex: youtube.com/watch?v=...) ou canal (ex: @MrBeast) — Ctrl + V"
-                    autocomplete="off"
-                    spellcheck="false"
-                >
-                <button type="button" class="btn-paste" onclick="pasteFromClipboard()">
-                    <i class="fas fa-paste"></i> Colar
-                </button>
+                <div class="search-input-wrapper">
+                    <i class="fas fa-link search-icon"></i>
+                    <input 
+                        type="text" 
+                        id="urlInput" 
+                        class="search-input" 
+                        placeholder="Cole qualquer link de vídeo (ex: youtube.com/watch?v=...) ou canal (ex: @MrBeast) — Ctrl + V"
+                        autocomplete="off"
+                        spellcheck="false"
+                    >
+                    <button type="button" class="btn-paste" onclick="pasteFromClipboard()" title="Colar da área de transferência">
+                        <i class="fas fa-paste"></i> Colar
+                    </button>
+                </div>
                 <button type="submit" id="btnSubmit" class="btn-submit">
                     <i class="fas fa-wand-magic-sparkles"></i> Extrair Tudo
                 </button>
